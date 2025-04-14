@@ -1,0 +1,57 @@
+id: com.rauschquelle.TechDemoSL1
+command: /app/silent_nebula
+
+modules:
+    - name: techDemoSL1
+      buildsystem: simple
+      build-options:
+        build-args:
+          - --share=network
+        prefix: /app/extension_directory/GL
+        prepend-path: /app/extension_directory/GL/bin
+        prepend-pkg-config-path: /app/extension_directory/GL/lib/pkgconfig
+        prepend-ld-library-path: /app/extension_directory/GL/lib
+      build-commands:
+        - cd glu; meson --prefix /app build; ninja -C build/ install
+        - mkdir glfw/build
+        - cd glfw/build; cmake -DCMAKE_INSTALL_PREFIX=/app ..; make -j32; make install
+        - mkdir assimp/build
+        - cd assimp/build; cmake -DCMAKE_INSTALL_PREFIX=/app ..; make -j32; make install
+        - mkdir opencv/build
+        - cd opencv/build; cmake -DCMAKE_INSTALL_PREFIX=/app -DWITH_WAYLAND=ON -DOPENCV_V4D_ENABLE_ES3=OFF -DCMAKE_CXX_FLAGS="-DCL_TARGET_OPENCL_VERSION=120" -DINSTALL_BIN_EXAMPLES=ON -DOPENCV_CUSTOM_PACKAGE_INFO=ON -DCPACK_PACKAGE_VERSION_MAJOR=4 -DCPACK_PACKAGE_VERSION_MINOR=10 -DCPACK_PACKAGE_VERSION_PATCH=0 -DCPACK_PACKAGE_VERSION=4:10.0-yourname -DCMAKE_BUILD_TYPE=Release -DCPACK_PACKAGE_CONTACT="you@example.com" -DOPENCV_GENERATE_PKGCONFIG=ON -DCPACK_PACKAGE_VENDOR=yourname -DCPACK_DEBIAN_PACKAGE_DEPENDS="libqt5opengl5,freeglut3,ocl-icd-libopencl1,libavcodec58,libavdevice58,libavfilter7,libavformat58,libavutil56,libpostproc55,libswresample3,libswscale5,libglfw3,libstb0,libglew2.2,zlib1g,libxinerama1,libxcursor1,libxi6,libva2,intel-opencl-icd,ca-certificates" -DINSTALL_CREATE_DISTRIB=ON -DCPACK_BINARY_DEB=ON -DCV_TRACE=OFF -DBUILD_SHARED_LIBS=ON -DWITH_OPENGL=ON -DOPENCV_ENABLE_EGL=ON -DOPENCV_ENABLE_GLX=ON -DOPENCV_FFMPEG_ENABLE_LIBAVDEVICE=ON -DWITH_QT=ON -DWITH_FFMPEG=ON -DOPENCV_FFMPEG_SKIP_BUILD_CHECK=ON -DWITH_VA=ON -DWITH_VA_INTEL=ON -DWITH_1394=OFF -DWITH_ADE=OFF -DWITH_VTK=OFF -DWITH_EIGEN=OFF -DWITH_GTK=OFF -DWITH_GTK_2_X=OFF -DWITH_IPP=OFF -DWITH_JASPER=OFF -DWITH_WEBP=OFF -DWITH_OPENEXR=OFF -DWITH_OPENVX=OFF -DWITH_OPENNI=OFF -DWITH_OPENNI2=OFF-DWITH_TBB=OFF -DWITH_TIFF=OFF -DWITH_OPENCL=OFF -DWITH_OPENCL_SVM=OFF -DWITH_OPENCLAMDFFT=OFF -DWITH_OPENCLAMDBLAS=OFF -DWITH_GPHOTO2=OFF -DWITH_LAPACK=OFF -DWITH_ITT=OFF -DWITH_QUIRC=ON -DBUILD_ZLIB=OFF -DBUILD_opencv_apps=OFF -DBUILD_opencv_calib3d=ON -DBUIlD_opencv_ccalib=OFF -DBUILD_opencv_dnn=ON -DBUILD_opencv_features2d=ON -DBUILD_opencv_flann=ON -DBUILD_opencv_gapi=OFF -DBUILD_opencv_ml=ON -DBUILD_opencv_photo=ON -DBUILD_opencv_imgcodecs=ON -DBUILD_opencv_shape=OFF -DBUILD_opencv_videoio=ON -DBUILD_opencv_videostab=OFF -DBUILD_opencv_highgui=ON -DBUILD_opencv_superres=OFF -DBUILD_opencv_stitching=ON -DBUILD_opencv_java=OFF -DBUILD_opencv_js=OFF -DBUILD_opencv_python2=OFF -DBUILD_opencv_python3=OFF -DBUILD_opencv_alphamat=OFF -DBUILD_opencv_aruco=OFF -DBUILD_opencv_barcode=OFF -DBUILD_opencv_bgsegm=OFF -DBUILD_opencv_bioinspired=OFF -DBUILD_opencv_ccalib=OFF -DBUILD_opencv_cnn_3dobj=OFF -DBUILD_opencv_cudaarithm=OFF -DBUILD_opencv_cudabgsegm=OFF -DBUILD_opencv_cudacodec=OFF -DBUILD_opencv_cudafeatures2d=OFF -DBUILD_opencv_cudafilters=OFF -DBUILD_opencv_cudaimgproc=OFF -DBUILD_opencv_cudalegacy=OFF -DBUILD_opencv_cudaobjdetect=OFF -DBUILD_opencv_cudaoptflow=OFF -DBUILD_opencv_cudastereo=OFF -DBUILD_opencv_cudawarping=OFF -DBUILD_opencv_cudev=OFF -DBUILD_opencv_cvv=OFF -DBUILD_opencv_datasets=OFF -DBUILD_opencv_dnn_objdetect=OFF -DBUILD_opencv_dnns_easily_fooled=OFF -DBUILD_opencv_dnn_superres=OFF -DBUILD_opencv_dpm=OFF -DBUILD_opencv_face=ON -DBUILD_opencv_freetype=OFF -DBUILD_opencv_fuzzy=OFF -DBUILD_opencv_hdf=OFF -DBUILD_opencv_hfs=OFF -DBUILD_opencv_img_hash=OFF -DBUILD_opencv_intensity_transform=OFF -DBUILD_opencv_julia=OFF -DBUILD_opencv_line_descriptor=OFF -DBUILD_opencv_matlab=OFF -DBUILD_opencv_mcc=OFF -DBUILD_opencv_optflow=ON -DBUILD_opencv_ovis=OFF -DBUILD_opencv_phase_unwrapping=OFF -DBUILD_opencv_plot=ON -DBUILD_opencv_quality=OFF -DBUILD_opencv_rapid=OFF -DBUILD_opencv_README.md=OFF -DBUILD_opencv_reg=OFF -DBUILD_opencv_rgbd=OFF -DBUILD_opencv_saliency=OFF -DBUILD_opencv_sfm=OFF -DBUILD_opencv_shape=OFF -DBUILD_opencv_stereo=OFF -DBUILD_opencv_structured_light=OFF -DBUILD_opencv_superres=OFF -DBUILD_opencv_surface_matching=OFF -DBUILD_opencv_text=OFF -DBUILD_opencv_tracking=ON -DBUILD_opencv_videostab=OFF -DBUILD_opencv_viz=OFF -DBUILD_opencv_wechat_qrcode=OFF -DBUILD_opencv_xfeatures2d=ON -DBUILD_opencv_ximgproc=ON -DBUILD_opencv_xobjdetect=ON -DBUILD_opencv_xphoto=OFF -DBUILD_opencv_world=OFF -DBUILD_EXAMPLES=ON -DBUILD_PACKAGE=ON -DBUILD_TESTS=OFF -DBUILD_PERF_TESTS=OFF -DBUILD_DOCS=OFF -DWITH_PTHREADS_PF=ON -DCV_ENABLE_INTRINSICS=ON -DBUILD_opencv_video=ON -DBUILD_opencv_v4d=ON -DGBFX_CONFIG_MULTITHREADED=OFF -DBGFX_CONFIG_PASSIVE=ON -DOPENCV_EXTRA_MODULES_PATH="../../Plan-V4D/modules;../../Silent-Nebula/modules" ..; make -j32 silent_nebula; cp bin/silent_nebula /app/; cp -r lib/* /app/lib/; 
+        - cp Silent-Nebula/spiky.stl /app/
+      sources:
+        - type: git
+          url: https://gitlab.freedesktop.org/mesa/glu.git
+          commit: a2b96c7bba8db8fec3e02fb4227a7f7b02cabad1
+          dest: glu
+        - type: git
+          url: https://github.com/glfw/glfw.git
+          commit: e7ea71be039836da3a98cea55ae5569cb5eb885c
+          dest: glfw
+        - type: git
+          url: https://github.com/assimp/assimp.git
+          commit: c35200e38ea8f058812b83de2ef32c6093b0ece2
+          dest: assimp
+        - type: git
+          url: https://github.com/kallaballa/opencv.git
+          commit: 937880829b7f487d534c316b0080f465ce8564eb
+          dest: opencv
+        - type: git
+          url: https://github.com/kallaballa/Plan-V4D.git
+          commit: ae9c71ad5b3aa3aba30fa5073d5559a39fae1f2a
+          dest: Plan-V4D
+        - type: archive
+          path: sn.tar.bz2
+          dest: Silent-Nebula
+
+runtime: org.kde.Platform
+runtime-version: 5.15-23.08
+sdk: org.kde.Sdk
+finish-args:
+- --socket=fallback-x11
+- --share=ipc
+- --socket=wayland
+- --socket=pulseaudio
+- --device=dri
+
